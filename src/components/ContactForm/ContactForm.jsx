@@ -5,36 +5,27 @@ import { useId } from "react";
 import * as Yup from "yup";
 import { ErrorMessage } from "formik";
 
-const FeedbackSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(3, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  number: Yup.string()
-    .min(3, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-});
-
-const initialValues = {
-  name: "",
-  number: "",
-  id: nanoid(),
-};
-
-const ContactForm = ({ user, onAddContact }) => {
+const ContactForm = ({ onAdd }) => {
+  const handleSubmit = (values, options) => {
+    onAdd({ ...values, id: nanoid() });
+    options.resetForm();
+  };
+  const initialValues = {
+    name: "",
+    number: "",
+  };
   const nameFieldId = useId();
   const numberFieldId = useId();
-
-  const handleSubmit = ({ name, number }) => {
-    const contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-
-    console.log(contact);
-  };
+  const FeedbackSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(3, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+    number: Yup.string()
+      .min(3, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+  });
 
   return (
     <Formik
@@ -43,31 +34,24 @@ const ContactForm = ({ user, onAddContact }) => {
       validationSchema={FeedbackSchema}
     >
       <Form className={s.form}>
-        <label htmlFor={nameFieldId}>Name</label>
-        <Field
-          className={s.input}
-          type="text"
-          name="name"
-          placeholder="Name"
-          id={nameFieldId}
-        />
-        <ErrorMessage name="name" as="span" />
+        <label className={s.label} htmlFor={nameFieldId}>
+          Name
+        </label>
+        <Field className={s.input} type="text" name="name" id={nameFieldId} />
+        <ErrorMessage className={s.error} name="name" component="span" />
 
-        <label htmlFor={numberFieldId}>Number</label>
+        <label className={s.label} htmlFor={numberFieldId}>
+          Number
+        </label>
         <Field
           className={s.input}
           type="text"
           name="number"
-          placeholder="Number"
           id={numberFieldId}
         />
-        <ErrorMessage name="number" as="span" />
+        <ErrorMessage className={s.error} name="number" component="span" />
 
-        <button
-          onClick={() => onAddContact(user.id)}
-          className={s.button}
-          type="submit"
-        >
+        <button type="submit" className={s.button}>
           Add contact
         </button>
       </Form>

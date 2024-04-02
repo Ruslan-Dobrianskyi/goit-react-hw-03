@@ -1,10 +1,8 @@
 import s from "./Contact.module.css";
 import { FaUser } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
-const Contact = ({ users, setUsers }) => {
-  const handleDelete = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
-  };
+import { MdDeleteForever } from "react-icons/md";
+const Contact = ({ users, onDelete }) => {
   return (
     <div>
       <ul className={s.list}>
@@ -13,7 +11,9 @@ const Contact = ({ users, setUsers }) => {
             <FaUser /> {user.name}
             <FaPhoneAlt />
             {user.number}
-            <button onClick={() => handleDelete(user.id)}>Delete</button>
+            <button className={s.button} onClick={() => onDelete(user.id)}>
+              <MdDeleteForever style={{ width: "30px", height: "30px" }} />
+            </button>
           </li>
         ))}
       </ul>
