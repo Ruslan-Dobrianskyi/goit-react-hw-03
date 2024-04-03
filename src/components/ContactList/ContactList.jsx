@@ -1,14 +1,13 @@
 import Contact from "../Contact/Contact";
-const ContactList = ({ users, setUsers, filteredUsers, onDelete }) => {
+const ContactList = ({ users, onDelete }) => {
   return (
-    <div>
-      <Contact
-        users={users}
-        setUsers={setUsers}
-        filteredUsers={filteredUsers}
-        onDelete={onDelete}
-      />
-    </div>
+    <ul>
+      {users.map((user) => (
+        <li key={user.id}>
+          <Contact user={user} onDelete={onDelete} />
+        </li>
+      ))}
+    </ul>
   );
 };
 

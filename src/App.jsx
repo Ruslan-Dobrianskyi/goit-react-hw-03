@@ -39,11 +39,7 @@ const App = () => {
       <h1 style={{ textAlign: "center", color: "white" }}>Phonebook</h1>
       <ContactForm onAdd={addUser} />
       <SearchBox searchStr={searchStr} onChangeSearch={handleSearch} />
-      <ContactList
-        users={filteredUsers}
-        setUsers={setUsers}
-        onDelete={handleDelete}
-      />
+      <ContactList users={filteredUsers} onDelete={handleDelete} />
     </div>
   );
 };
